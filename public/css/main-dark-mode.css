@@ -1,0 +1,37 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  background: rgb(222, 222, 223);
+  text-align: justify;
+  color:rgb(85, 74, 74);
+  height: 5em;
+  padding-left: 30px;
+  padding-right: 30px;
+  align-items: center;
+}
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+}
+
+body{
+  background-color: rgb(1, 7, 12);
+  font-family: "Gill Sans", sans-serif;
+  color: palegoldenrod;
+}
+
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(231, 218, 218);
+  color: rgb(85, 74, 74);
+  text-align: center;
+}

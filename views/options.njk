@@ -1,0 +1,25 @@
+{% extends "layout.njk" %}
+
+{% block css %}
+ {%if light %}
+    <link rel="stylesheet" href="/css/main-light-mode.css" />
+    {%elif dark %}
+    <link rel="stylesheet" href="/css/main-dark-mode.css" />
+    {%endif%}
+{% endblock %}
+
+{% block content %}
+<h1>Choose your mode</h1>
+
+<form method="post" action="/add-cookie">
+  <fieldset>
+    <legend>What's your mood ?</legend>
+    <label><input type="radio" name="appearance" value="light"> Light </label>
+    <label><input type="radio" name="appearance" value="dark"> Dark </label>
+  </fieldset>
+   <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
+
+

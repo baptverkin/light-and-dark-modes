@@ -1,0 +1,14 @@
+{% extends "layout.njk" %}
+
+{% block css %}
+ {%if light %}
+    <link rel="stylesheet" href="/css/main-light-mode.css" />
+    {%elif dark %}
+    <link rel="stylesheet" href="/css/main-dark-mode.css" />
+    {%endif%}
+{% endblock %}
+
+{% block content %}
+<h1><a href=/options>Dark or light mood ? Click to choose</a></h1>
+
+{% endblock %}
