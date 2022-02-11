@@ -1,9 +1,9 @@
 {% extends "layout.njk" %}
 
 {% block css %}
- {%if light %}
+ {%if cookieType == "light" %}
     <link rel="stylesheet" href="/css/main-light-mode.css" />
-    {%elif dark %}
+ {%elif cookieType == "dark" %}
     <link rel="stylesheet" href="/css/main-dark-mode.css" />
     {%endif%}
 {% endblock %}

@@ -1,6 +1,7 @@
 import express from "express";
 import nunjucks from "nunjucks";
 import cookie from "cookie";
+import { myUsers } from "../src/userDataBase";
 
 const app = express();
 
@@ -15,38 +16,48 @@ app.use(express.static("public"));
 
 app.get("/", (request, response) => {
   const cookies = cookie.parse(request.get("cookie") || "");
-  console.log(cookies);
   const cookieType = cookies.myCookie;
-  console.log(cookieType);
-  let light = "";
-  let dark = "";
-  if (cookieType === "light") {
-    light = "light";
-  } else if (cookieType === "dark") {
-    dark = "dark";
+  const cookieUsername = cookies.usernameCookie;
+  const cookiePassword = cookies.passwordCookie;
+  if (cookieUsername === undefined && cookiePassword === undefined) {
+    response.render("login");
+  } else {
+    response.render("home", { cookieType });
   }
-  response.render("home", { light, dark });
 });
 
 app.get("/options", (request, response) => {
   const cookies = cookie.parse(request.get("cookie") || "");
-  console.log(cookies);
   const cookieType = cookies.myCookie;
   console.log(cookieType);
-  let light = "";
-  let dark = "";
-  if (cookieType === "light") {
-    light = "light";
-  } else if (cookieType === "dark") {
-    dark = "dark";
-  }
-  response.render("options", { light, dark });
+  response.render("options", { cookieType });
 });
 
 const formParser = express.urlencoded({ extended: true });
 
 app.post("/handle-form", formParser, (request, response) => {
-  response.send(JSON.stringify(request.body));
+  const usernameExist = request.body.username;
+  const passwordExist = request.body.password;
+
+  console.log(usernameExist);
+  console.log(passwordExist);
+
+  if (
+    myUsers.some((element) => element.username === usernameExist) &&
+    myUsers.some((element) => element.password === passwordExist)
+  ) {
+    response.set("Set-Cookie", [
+      cookie.serialize("usernameCookie", usernameExist, {
+        maxAge: 3600,
+      }),
+      cookie.serialize("passwordCookie", passwordExist, {
+        maxAge: 3600,
+      }),
+    ]);
+    response.redirect("/");
+  } else {
+    response.redirect("/");
+  }
 });
 
 app.post("/add-cookie", formParser, (request, response) => {
@@ -58,6 +69,18 @@ app.post("/add-cookie", formParser, (request, response) => {
       maxAge: 3600,
     }),
   );
+  response.redirect("/");
+});
+
+app.get("/logout", (request, response) => {
+  response.set("Set-Cookie", [
+    cookie.serialize("usernameCookie", "", {
+      maxAge: 0,
+    }),
+    cookie.serialize("passwordCookie", "", {
+      maxAge: 0,
+    }),
+  ]);
   response.redirect("/");
 });
 

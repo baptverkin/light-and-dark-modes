@@ -34,3 +34,9 @@ body{
   color: rgb(85, 74, 74);
   text-align: center;
 }
+
+.image-cropper{
+  width: 148px;
+  height: 40px;
+}
+
